@@ -1,10 +1,10 @@
-import {ContactData} from "../type";
+import {ContactInForm} from "../type";
 import {createSlice} from "@reduxjs/toolkit";
 import {RootState} from "../app/store";
 import {addContactToApi} from "./contactFormThunks";
 
 interface FormState {
-  contact: ContactData,
+  contact: ContactInForm,
   lauding: boolean,
   btnLauding: boolean,
 }

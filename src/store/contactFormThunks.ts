@@ -1,8 +1,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ContactData} from "../type";
+import {ContactInForm} from "../type";
 import axiosApi from "../axiosApi";
 
-export const addContactToApi = createAsyncThunk<void, ContactData>(
+export const addContactToApi = createAsyncThunk<void, ContactInForm>(
   "addContact/contactForm",
   async (contact) => {
     await axiosApi.post(".json", contact);
