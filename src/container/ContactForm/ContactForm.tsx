@@ -4,6 +4,7 @@ import {changeContactValue, selectorBtnLauding, selectorContact, selectorLauding
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import Spinner from "../../components/Spinner/Spinner";
 import {addContactToApi} from "../../store/contactFormThunks";
+import BtnSpinner from "../../components/BtnSpinner/BtnSpinner";
 
 const ContactForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -23,8 +24,17 @@ const ContactForm: React.FC = () => {
     await dispatch(addContactToApi(contact));
   };
 
+  const photoPreview = {
+    width: 100,
+    height: 100,
+    backgroundImage: `url(${contact.photo})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  };
+
   const formContact = (
-    <form className={"form-control d-flex flex-column gap-2 "}>
+    <form onSubmit={addContact} className={"form-control d-flex flex-column gap-2 "}>
       <div>
         <label htmlFor={"name"}>Name</label>
         <input
@@ -71,15 +81,13 @@ const ContactForm: React.FC = () => {
       </div>
       <div className={"d-flex gap-3 mt-3 mb-3"}>
         <label>Photo preview</label>
-        <img
-          alt={"Not found"}
-          src={contact.photo}
-          className={"border rounded"}
-          style={{width: 100, height: 100}}
-        />
+        <div className={"border rounded"} style={photoPreview}></div>
       </div>
       <div className={"d-flex gap-3"}>
-        <button type={"submit"} onClick={addContact} className={"btn btn-primary"} disabled={btnLauding}>Save</button>
+        <button className="btn btn-primary d-flex align-items-center gap-2" type="submit"  disabled={btnLauding}>
+          {btnLauding && <BtnSpinner />}
+          <span role="status">Add</span>
+        </button>
         <Link to={"/"} className={"btn btn-primary"}>Back to contacts</Link>
       </div>
     </form>
@@ -87,8 +95,8 @@ const ContactForm: React.FC = () => {
 
   return (
     (lauding)
-    ? <Spinner />
-    : formContact
+      ? <Spinner/>
+      : formContact
   );
 };
 

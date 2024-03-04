@@ -8,6 +8,7 @@ interface FormState {
   lauding: boolean,
   btnLauding: boolean,
 }
+
 const initialState: FormState = {
   contact: {
     name: "",
