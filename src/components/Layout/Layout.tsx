@@ -3,7 +3,7 @@ import Header from "../Header/Header";
 
 const Layout: React.FC<React.PropsWithChildren> = ({children}) => {
   return (
-    <div className={"min-vh-100"}>
+    <div className={"min-vh-100 m-auto"} style={{width:1000}}>
       <Header />
       <main>
         {children}

@@ -1,19 +1,15 @@
 import React from "react";
+import {NavLink} from "react-router-dom";
 
 const NavBar: React.FC = () => {
   return (
     <ul className="nav nav-pills nav-fill">
+
       <li className="nav-item">
-        <a className="nav-link active" aria-current="page" href="#">Active</a>
+        <NavLink to={"/"} className={"nav-link"}>Contacts</NavLink>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="#">Much longer nav link</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="#">Link</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+        <NavLink to={"/contact-form"} className={"nav-link"}>Add contact</NavLink>
       </li>
     </ul>
   );
