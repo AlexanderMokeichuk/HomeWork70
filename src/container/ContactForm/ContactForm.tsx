@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {changeContactValue, selectorContact, selectorLauding} from "../../store/contactFormSlice";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import Spinner from "../../components/Spinner/Spinner";
 
 const ContactForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -15,8 +16,7 @@ const ContactForm: React.FC = () => {
     }));
   };
 
-
-  return  (
+  const formContact = (
     <form className={"form-control d-flex flex-column gap-2 "}>
       <div>
         <label htmlFor={"name"}>Name</label>
@@ -68,7 +68,7 @@ const ContactForm: React.FC = () => {
           alt={"Not found"}
           src={contact.photo}
           className={"border rounded"}
-          style={{width:100, height:100}}
+          style={{width: 100, height: 100}}
         />
       </div>
       <div className={"d-flex gap-3"}>
@@ -76,6 +76,12 @@ const ContactForm: React.FC = () => {
         <Link to={"/"} className={"btn btn-primary"}>Back to contacts</Link>
       </div>
     </form>
+  );
+
+  return (
+    (lauding)
+    ? <Spinner />
+    : formContact
   );
 };
 
