@@ -1,20 +1,30 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
+import {changeContactValue, selectorContact, selectorLauding} from "../../store/contactFormSlice";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 
 const ContactForm: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const contact = useAppSelector(selectorContact);
+  const lauding = useAppSelector(selectorLauding);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeContactValue({
+      ...contact,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
 
-  useEffect(() => {
-    alert("ss");
-  }, []);
-
-  return (
-    <form className={"form-control"}>
+  return  (
+    <form className={"form-control d-flex flex-column gap-2 "}>
       <div>
         <label htmlFor={"name"}>Name</label>
         <input
           type={"text"}
           name={"name"}
+          value={contact.name}
+          onChange={onChange}
           className={"form-control"}
           required
         />
@@ -23,7 +33,9 @@ const ContactForm: React.FC = () => {
         <label htmlFor={"phone"}>Phone</label>
         <input
           type={"number"}
-          name={"phone"}
+          name={"phoneNumber"}
+          value={contact.phoneNumber}
+          onChange={onChange}
           className={"form-control"}
           required
         />
@@ -33,6 +45,8 @@ const ContactForm: React.FC = () => {
         <input
           type={"email"}
           name={"email"}
+          value={contact.email}
+          onChange={onChange}
           className={"form-control"}
           required
         />
@@ -42,15 +56,20 @@ const ContactForm: React.FC = () => {
         <input
           type={"url"}
           name={"photo"}
+          value={contact.photo}
+          onChange={onChange}
           className={"form-control"}
           required
         />
       </div>
-      <div>
+      <div className={"d-flex gap-3 mt-3 mb-3"}>
         <label>Photo preview</label>
-        <div>
-
-        </div>
+        <img
+          alt={"Not found"}
+          src={contact.photo}
+          className={"border rounded"}
+          style={{width:100, height:100}}
+        />
       </div>
       <div className={"d-flex gap-3"}>
         <button type={"submit"} className={"btn btn-primary"}>Save</button>
