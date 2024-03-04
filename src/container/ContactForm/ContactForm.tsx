@@ -1,19 +1,26 @@
-import React from "react";
+import React, {FormEvent} from "react";
 import {Link} from "react-router-dom";
-import {changeContactValue, selectorContact, selectorLauding} from "../../store/contactFormSlice";
+import {changeContactValue, selectorBtnLauding, selectorContact, selectorLauding} from "../../store/contactFormSlice";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import Spinner from "../../components/Spinner/Spinner";
+import {addContactToApi} from "../../store/contactFormThunks";
 
 const ContactForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const contact = useAppSelector(selectorContact);
   const lauding = useAppSelector(selectorLauding);
+  const btnLauding = useAppSelector(selectorBtnLauding);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(changeContactValue({
       ...contact,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const addContact = async (e: FormEvent) => {
+    e.preventDefault();
+    await dispatch(addContactToApi(contact));
   };
 
   const formContact = (
@@ -72,7 +79,7 @@ const ContactForm: React.FC = () => {
         />
       </div>
       <div className={"d-flex gap-3"}>
-        <button type={"submit"} className={"btn btn-primary"}>Save</button>
+        <button type={"submit"} onClick={addContact} className={"btn btn-primary"} disabled={btnLauding}>Save</button>
         <Link to={"/"} className={"btn btn-primary"}>Back to contacts</Link>
       </div>
     </form>
