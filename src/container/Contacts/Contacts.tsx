@@ -18,12 +18,18 @@ const Contacts: React.FC = () => {
   return (
     <div className={"mt-3"}>
       {(lauding)
-        ? <Spinner />
-        : contacts.map((item) => {
-          return <ContactAlert key={item.id} contact={item} />;
-        })
+        ? <Spinner/>
+        : (contacts.length)
+          ? contacts.map((item) => {
+            return <ContactAlert key={item.id} contact={item}/>;
+          })
+          : (
+            <div className={"alert alert-primary"}>
+              You have no contacts
+            </div>
+          )
       }
-      <Outlet />
+      <Outlet/>
     </div>
   );
 };

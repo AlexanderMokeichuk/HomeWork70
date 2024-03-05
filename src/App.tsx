@@ -1,8 +1,8 @@
 import Layout from "./components/Layout/Layout";
 import {Route, Routes} from "react-router-dom";
-import ContactForm from "./container/ContactForm/ContactForm";
+import AddContact from "./container/AddContact/AddContact";
 import Contacts from "./container/Contacts/Contacts";
-import ModalWindowContact from "./components/ModalWindowContact/ModalWindowContact";
+import ModalContact from "./container/ModalContact/ModalContact";
 
 function App() {
 
@@ -10,10 +10,10 @@ function App() {
     <Layout>
       <Routes>
         <Route path={"/"} element={(<Contacts />)} >
-          <Route path={"modal-contact/:id"} element={(<ModalWindowContact />)} />
+          <Route path={"modal-contact/:id"} element={(<ModalContact />)} />
         </Route>
-        <Route path={"contact-form"} element={(<ContactForm />)} />
-        <Route path={"/contact-edit/:id"} element={(<ContactForm />)} />
+        <Route path={"contact-form"} element={(<AddContact />)} />
+        <Route path={"/contact-edit/:id"} element={(<AddContact />)} />
         <Route path={"*"} element={(<h1>Not found</h1>)} />
       </Routes>
     </Layout>

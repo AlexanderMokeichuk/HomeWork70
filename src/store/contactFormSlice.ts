@@ -4,13 +4,13 @@ import {RootState} from "../app/store";
 import {addContactToApi, editContact, fetchDataForForm} from "./contactFormThunks";
 
 interface FormState {
-  contact: ContactInForm,
+  contactForm: ContactInForm,
   lauding: boolean,
   btnLauding: boolean,
 }
 
 const initialState: FormState = {
-  contact: {
+  contactForm: {
     name: "",
     phoneNumber: "",
     email: "",
@@ -25,12 +25,15 @@ const contactFormSlice = createSlice({
   initialState: initialState,
   reducers: {
     changeContactValue: (state, action) => {
-      state.contact = action.payload;
+      state.contactForm = action.payload;
+    },
+    resetContactForm: (state) => {
+      state.contactForm = initialState.contactForm;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(addContactToApi.pending, (state) => {
-      state.contact = initialState.contact;
+      state.contactForm = initialState.contactForm;
       state.btnLauding = true;
     });
     builder.addCase(addContactToApi.fulfilled, (state) => {
@@ -45,7 +48,7 @@ const contactFormSlice = createSlice({
     });
     builder.addCase(fetchDataForForm.fulfilled, (state, {payload: data}: PayloadAction<ContactInForm | null>) => {
       if (data) {
-        state.contact = data;
+        state.contactForm = data;
       }
       state.lauding = false;
     });
@@ -57,7 +60,7 @@ const contactFormSlice = createSlice({
       state.btnLauding = true;
     });
     builder.addCase(editContact.fulfilled, (state) => {
-      state.contact = initialState.contact;
+      state.contactForm = initialState.contactForm;
       state.btnLauding = false;
     });
     builder.addCase(editContact.rejected, (state) => {
@@ -67,7 +70,7 @@ const contactFormSlice = createSlice({
 });
 
 export const contactFormReducer = contactFormSlice.reducer;
-export const {changeContactValue} = contactFormSlice.actions;
-export const selectorContact = (state: RootState) => state.contactForm.contact;
+export const {changeContactValue, resetContactForm} = contactFormSlice.actions;
+export const selectorContact = (state: RootState) => state.contactForm.contactForm;
 export const selectorLauding = (state: RootState) => state.contactForm.lauding;
 export const selectorBtnLauding = (state: RootState) => state.contactForm.btnLauding;
