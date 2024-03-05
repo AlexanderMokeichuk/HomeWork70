@@ -1,7 +1,7 @@
 import {ContactInForm} from "../type";
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../app/store";
-import {addContactToApi} from "./contactFormThunks";
+import {addContactToApi, editContact, fetchDataForForm} from "./contactFormThunks";
 
 interface FormState {
   contact: ContactInForm,
@@ -37,6 +37,30 @@ const contactFormSlice = createSlice({
       state.btnLauding = false;
     });
     builder.addCase(addContactToApi.rejected, (state) => {
+      state.btnLauding = false;
+    });
+
+    builder.addCase(fetchDataForForm.pending, (state) => {
+      state.lauding = true;
+    });
+    builder.addCase(fetchDataForForm.fulfilled, (state, {payload: data}: PayloadAction<ContactInForm | null>) => {
+      if (data) {
+        state.contact = data;
+      }
+      state.lauding = false;
+    });
+    builder.addCase(fetchDataForForm.rejected, (state) => {
+      state.lauding = false;
+    });
+
+    builder.addCase(editContact.pending, (state) => {
+      state.btnLauding = true;
+    });
+    builder.addCase(editContact.fulfilled, (state) => {
+      state.contact = initialState.contact;
+      state.btnLauding = false;
+    });
+    builder.addCase(editContact.rejected, (state) => {
       state.btnLauding = false;
     });
   }

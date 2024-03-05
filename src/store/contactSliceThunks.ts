@@ -3,7 +3,7 @@ import {Contact, ContactInApi} from "../type";
 import axiosApi from "../axiosApi";
 
 export const fetchContacts = createAsyncThunk<Contact[] | []>(
-  "contacts/fetchContacts",
+  "contact/fetchContacts",
   async () => {
     const {data: contacts} = await axiosApi.get<ContactInApi | null>(".json");
     if (contacts) {
@@ -19,4 +19,26 @@ export const fetchContacts = createAsyncThunk<Contact[] | []>(
       return [];
     }
   }
+);
+
+export const fetchContact = createAsyncThunk<Contact | null, string>(
+  "contact/fetchContact",
+  async (id) => {
+    const {data: contact} = await axiosApi.get<Contact | null>(`/${id}.json`);
+    if (contact) {
+      return {
+        ...contact,
+        id
+      };
+    } else {
+      return null;
+    }
+  },
+);
+
+export const deleteContactInApi = createAsyncThunk<void, string>(
+  "contact/deleteContact",
+  async (id) => {
+    await axiosApi.delete(`/${id}.json`);
+  },
 );

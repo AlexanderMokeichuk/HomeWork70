@@ -1,12 +1,15 @@
 import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {selectorContactsSlice} from "../../store/contactsSlice";
-import {fetchContacts} from "../../store/contactsSliceThunks";
+import {selectorContactsSlice, selectorLaudingContacts} from "../../store/contactSlice";
 import Spinner from "../../components/Spinner/Spinner";
+import ContactAlert from "../../components/ContactAlert/ContactAlert";
+import {Outlet} from "react-router-dom";
+import {fetchContacts} from "../../store/contactSliceThunks";
 
 const Contacts: React.FC = () => {
   const dispatch = useAppDispatch();
-  const {contacts, lauding} = useAppSelector(selectorContactsSlice);
+  const lauding = useAppSelector(selectorLaudingContacts);
+  const contacts = useAppSelector(selectorContactsSlice);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -17,13 +20,10 @@ const Contacts: React.FC = () => {
       {(lauding)
         ? <Spinner />
         : contacts.map((item) => {
-          return (
-            <div className={"alert alert-primary"}>
-              <span>{item.name}</span>
-            </div>
-          );
+          return <ContactAlert key={item.id} contact={item} />;
         })
       }
+      <Outlet />
     </div>
   );
 };
