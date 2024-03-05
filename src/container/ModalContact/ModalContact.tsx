@@ -44,7 +44,7 @@ const ModalContact: React.FC = () => {
     modalBody = (
       <>
         <div>
-          <img src={modal.photo} className={"rounded"} style={{width: 100, height: 100}}/>
+          <img alt={"#"} src={modal.photo} className={"rounded"} style={{width: 100, height: 100}}/>
         </div>
         <div>
           <h3>{modal.name}</h3>
